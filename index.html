@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avaliação 2B - Cabeçalho Unificado & Layout Perfeito</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- html2pdf.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    .btn-check:checked + .btn-outline-primary {
+      background-color: #0d6efd !important;
+      color: #fff !important;
+      font-weight: bold;
+    }
+    .btn-check:checked + .btn-outline-success {
+      background-color: #198754 !important;
+      color: #fff !important;
+      font-weight: bold;
+    }
+    .grid-caixas {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .gabarito-dica {
+      font-size: 0.78rem;
+      background-color: #e8f5e9;
+      border-left: 3px solid #198754;
+      padding: 4px 8px;
+      margin-top: 4px;
+      border-radius: 2px;
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body class="bg-light pb-5">
+
+  <div class="container my-4">
+    <header class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+      <div>
+        <h1 class="h3 mb-0 text-primary">Sistema de Avaliação 2B</h1>
+        <small class="text-muted">Gabarito de Arguição | Cabeçalho Unificado em Página Única</small>
+      </div>
+      <button id="btnResetarAlunos" class="btn btn-outline-secondary btn-sm">Resetar Alunos no DB</button>
+    </header>
+
+    <!-- NAVEGAÇÃO -->
+    <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+      <li class="nav-item">
+        <button class="nav-link active" id="pills-avaliar-tab" data-bs-toggle="pill" data-bs-target="#pills-avaliar" type="button">1. Avaliar Apresentação</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="pills-cadastrar-tab" data-bs-toggle="pill" data-bs-target="#pills-cadastrar" type="button">2. Pré-Cadastrar Duplas/Solos</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+
+      <!-- ABA 1: FICHA DE AVALIAÇÃO -->
+      <div class="tab-pane fade show active" id="pills-avaliar">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="card shadow-sm border-primary">
+              <div class="card-header bg-primary text-white">
+                <h2 class="h5 mb-0" id="formTitulo">Ficha de Avaliação</h2>
+              </div>
+              <div class="card-body">
+                <form id="formAvaliacao">
+
+                  <!-- SELEÇÃO DE APRESENTAÇÃO -->
+                  <div class="mb-4 bg-light p-3 rounded border">
+                    <label class="form-label fw-bold text-dark">Selecione quem vai apresentar</label>
+                    <select id="selectApresentacao" class="form-select form-select-lg" required>
+                      <option value="">Selecione quem vai apresentar...</option>
+                    </select>
+                  </div>
+
+                  <!-- EIXO 1: CANVA (5 PERGUNTAS) -->
+                  <div class="card mb-4 border-info">
+                    <div class="card-header bg-info text-dark fw-bold">Eixo 1: Material Visual & Canva (5 Perguntas — Max 50 Pts)</div>
+                    <div class="card-body">
+
+                      <div class="mb-3">
+                        <label class="form-label fw-bold small mb-1">1. Legibilidade e Contraste de Cores</label>
+                        <div class="grid-caixas">
+                          <input type="radio" class="btn-check" name="canva_p1" id="canva_p1_2" value="2" required>
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p1_2">Ruim<br><small>2 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p1" id="canva_p1_4" value="4">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p1_4">Reg.<br><small>4 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p1" id="canva_p1_7" value="7">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p1_7">Bom<br><small>7 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p1" id="canva_p1_10" value="10">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p1_10">Ótimo<br><small>10 Pts</small></label>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label fw-bold small mb-1">2. Tamanho e Hierarquia das Fontes</label>
+                        <div class="grid-caixas">
+                          <input type="radio" class="btn-check" name="canva_p2" id="canva_p2_2" value="2" required>
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p2_2">Ruim<br><small>2 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p2" id="canva_p2_4" value="4">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p2_4">Reg.<br><small>4 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p2" id="canva_p2_7" value="7">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p2_7">Bom<br><small>7 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p2" id="canva_p2_10" value="10">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p2_10">Ótimo<br><small>10 Pts</small></label>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label fw-bold small mb-1">3. Qualidade e Destaques dos Prints do Código</label>
+                        <div class="grid-caixas">
+                          <input type="radio" class="btn-check" name="canva_p3" id="canva_p3_2" value="2" required>
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p3_2">Ruim<br><small>2 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p3" id="canva_p3_4" value="4">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p3_4">Reg.<br><small>4 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p3" id="canva_p3_7" value="7">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p3_7">Bom<br><small>7 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p3" id="canva_p3_10" value="10">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p3_10">Ótimo<br><small>10 Pts</small></label>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label fw-bold small mb-1">4. Layout, Alinhamento e Estética</label>
+                        <div class="grid-caixas">
+                          <input type="radio" class="btn-check" name="canva_p4" id="canva_p4_2" value="2" required>
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p4_2">Ruim<br><small>2 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p4" id="canva_p4_4" value="4">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p4_4">Reg.<br><small>4 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p4" id="canva_p4_7" value="7">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p4_7">Bom<br><small>7 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p4" id="canva_p4_10" value="10">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p4_10">Ótimo<br><small>10 Pts</small></label>
+                        </div>
+                      </div>
+
+                      <div class="mb-0">
+                        <label class="form-label fw-bold small mb-1">5. Cobertura Técnica no Material (.trim, Guard Clauses, CRUD)</label>
+                        <div class="grid-caixas">
+                          <input type="radio" class="btn-check" name="canva_p5" id="canva_p5_2" value="2" required>
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p5_2">Ruim<br><small>2 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p5" id="canva_p5_4" value="4">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p5_4">Reg.<br><small>4 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p5" id="canva_p5_7" value="7">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p5_7">Bom<br><small>7 Pts</small></label>
+                          <input type="radio" class="btn-check" name="canva_p5" id="canva_p5_10" value="10">
+                          <label class="btn btn-outline-primary btn-sm" for="canva_p5_10">Ótimo<br><small>10 Pts</small></label>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- EIXO 2: ORALIDADE COM GABARITO VISÍVEL -->
+                  <div class="card mb-4 border-warning">
+                    <div class="card-header bg-warning text-dark fw-bold">Eixo 2: Oralidade & Arguição Técnica (5 Perguntas — Max 50 Pts)</div>
+                    <div class="card-body">
+                      <div class="row g-4" id="containerOralidade">
+                        <div class="col-12 text-muted">Selecione uma apresentação acima para carregar a avaliação individual.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Observações / Feedback Geral</label>
+                    <textarea id="observacoes" class="form-control" rows="3" placeholder="Insira comentários sobre o desempenho..."></textarea>
+                  </div>
+
+                  <div class="d-grid gap-2">
+                    <button type="submit" id="btnSalvar" class="btn btn-primary btn-lg">Salvar Avaliação</button>
+                    <button type="button" id="btnCancelar" class="btn btn-outline-danger d-none">Cancelar Edição</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- TABELA DE RESULTADOS -->
+          <div class="col-lg-4">
+            <div class="card shadow-sm mb-3">
+              <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h2 class="h5 mb-0">Avaliações Concluídas</h2>
+                <button id="btnResetarAvaliacoes" class="btn btn-outline-danger btn-sm">Resetar DB</button>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Apresentação</th>
+                        <th>Notas</th>
+                        <th class="text-end">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tabelaAvaliacoes">
+                      <tr><td colspan="3" class="text-center py-4 text-muted">Nenhuma avaliação cadastrada.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <button id="btnRelatorioGeral" class="btn btn-success w-100 py-2 fw-bold shadow-sm">
+              📄 Baixar Relatório Geral da Turma (PDF)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 2: PRÉ-CADASTRO -->
+      <div class="tab-pane fade" id="pills-cadastrar">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="card shadow-sm">
+              <div class="card-header bg-secondary text-white">
+                <h3 class="h5 mb-0">Pré-Cadastrar Nova Apresentação</h3>
+              </div>
+              <div class="card-body">
+                <form id="formPreCadastro">
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Formato</label>
+                    <select id="preTipo" class="form-select" required>
+                      <option value="dupla">Dupla</option>
+                      <option value="solo">Solo</option>
+                    </select>
+                  </div>
+
+                  <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label fw-bold">Estudante 1</label>
+                      <select id="preEstudante1" class="form-select" required></select>
+                    </div>
+                    <div class="col-md-6" id="divPreEstudante2">
+                      <label class="form-label fw-bold">Estudante 2</label>
+                      <select id="preEstudante2" class="form-select"></select>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-success w-100">Cadastrar Apresentação</button>
+                </form>
+
+                <hr class="my-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="h6 mb-0">Apresentações Agendadas</h4>
+                  <button id="btnResetarGrupos" class="btn btn-outline-danger btn-sm">Resetar Agendamentos</button>
+                </div>
+                <ul class="list-group" id="listaGruposAgendados"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCahFskA5F_wZgxl0Eprngk6WA5Famzzzw",
+      authDomain: "avalia-valida-2b.firebaseapp.com",
+      databaseURL: "https://avalia-valida-2b-default-rtdb.firebaseio.com",
+      projectId: "avalia-valida-2b",
+      storageBucket: "avalia-valida-2b.firebasestorage.app",
+      messagingSenderId: "1033406186650",
+      appId: "1:1033406186650:web:6b8183c15453bc24514b23"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const turma2BPadrao = {
+      "aluno_01": { "nome": "ALEXANDRE ROLIN" }, "aluno_02": { "nome": "ARTHUR PERUSSOLO" },
+      "aluno_03": { "nome": "BEATRIZ SUNTAK" }, "aluno_04": { "nome": "CAIO COUTINHO" },
+      "aluno_05": { "nome": "DANIEL NUNES" }, "aluno_06": { "nome": "DAVI ROBES" },
+      "aluno_07": { "nome": "ENDRIO CARDOSO" }, "aluno_08": { "nome": "ENZO MAURÍCIO" },
+      "aluno_09": { "nome": "ESTER GABRIELA" }, "aluno_10": { "nome": "FABIO FECHER" },
+      "aluno_11": { "nome": "FELIPE CECILIANO" }, "aluno_12": { "nome": "GABRIEL PACHECO" },
+      "aluno_13": { "nome": "GABRIELLY VITORIA" }, "aluno_14": { "nome": "GIULA PORTELA" },
+      "aluno_15": { "nome": "GUILHERME TIMOTEO" }, "aluno_16": { "nome": "GUSTAVO BACH" },
+      "aluno_17": { "nome": "HELOISE ANDRADE" }, "aluno_18": { "nome": "IARA GARRET" },
+      "aluno_19": { "nome": "ISABELA WOJAKEVICZ" }, "aluno_20": { "nome": "JULIA BONATO" },
+      "aluno_21": { "nome": "KAIO MOCELLIN" }, "aluno_22": { "nome": "LEONARDO PAIZANI" },
+      "aluno_23": { "nome": "LETÍCIA KUCHAKI" }, "aluno_24": { "nome": "LUCAS WSSNER" },
+      "aluno_25": { "nome": "LUCAS MELLO" }, "aluno_26": { "nome": "LUISA CARLOTO" },
+      "aluno_27": { "nome": "LUIZ FELIPE" }, "aluno_28": { "nome": "MATEUS PERIN" },
+      "aluno_29": { "nome": "MIRELLA GRUBELL" }, "aluno_30": { "nome": "NICOLAS DE PAULA" },
+      "aluno_31": { "nome": "PAULA CORÁ" }, "aluno_32": { "nome": "TICIANE CHEVA" },
+      "aluno_33": { "nome": "VINICIUS BARRETO" }, "aluno_34": { "nome": "VITOR LOFFLER" }
+    };
+
+    let listaEstudantes = {};
+    let listaGrupos = {};
+    let listaAvaliacoes = {};
+    let idEdicao = null;
+
+    const selectApresentacao = document.getElementById("selectApresentacao");
+    const containerOralidade = document.getElementById("containerOralidade");
+    const preTipo = document.getElementById("preTipo");
+
+    function atualizarDropdownsEstudantes(dados) {
+      const opts = ['<option value="">Selecione o Aluno...</option>'];
+      Object.keys(dados).forEach(id => {
+        opts.push(`<option value="${id}">${dados[id].nome}</option>`);
+      });
+      document.getElementById("preEstudante1").innerHTML = opts.join("");
+      document.getElementById("preEstudante2").innerHTML = opts.join("");
+    }
+
+    listaEstudantes = turma2BPadrao;
+    atualizarDropdownsEstudantes(listaEstudantes);
+
+    onValue(ref(db, "estudantes"), (snapshot) => {
+      const dados = snapshot.val();
+      if (dados) {
+        listaEstudantes = dados;
+        atualizarDropdownsEstudantes(listaEstudantes);
+      } else {
+        set(ref(db, "estudantes"), turma2BPadrao);
+      }
+    });
+
+    selectApresentacao.addEventListener("change", () => {
+      const grupoKey = selectApresentacao.value;
+      if (!grupoKey || !listaGrupos[grupoKey]) {
+        containerOralidade.innerHTML = '<div class="col-12 text-muted">Selecione uma apresentação acima.</div>';
+        return;
+      }
+
+      const g = listaGrupos[grupoKey];
+      if (g.tipo === "solo") {
+        containerOralidade.innerHTML = renderCamposOralidadeFlegaveis(1, g.estudante1Nome);
+      } else {
+        containerOralidade.innerHTML = `
+          <div class="col-md-6 border-end">${renderCamposOralidadeFlegaveis(1, g.estudante1Nome)}</div>
+          <div class="col-md-6">${renderCamposOralidadeFlegaveis(2, g.estudante2Nome)}</div>
+        `;
+      }
+    });
+
+    function renderCamposOralidadeFlegaveis(num, nome) {
+      return `
+        <h6 class="fw-bold text-dark mb-3 border-bottom pb-1">Estudante ${num}: ${nome}</h6>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold mb-1">6. Postura, Dicção e Tom de Voz</label>
+          <div class="grid-caixas">
+            <input type="radio" class="btn-check" name="est${num}_p6" id="est${num}_p6_2" value="2" required>
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p6_2">Ruim<br><small>2 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p6" id="est${num}_p6_4" value="4">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p6_4">Reg.<br><small>4 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p6" id="est${num}_p6_7" value="7">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p6_7">Bom<br><small>7 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p6" id="est${num}_p6_10" value="10">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p6_10">Ótimo<br><small>10 Pts</small></label>
+          </div>
+          <div class="gabarito-dica"><strong>Gabarito p/ Ótimo:</strong> Fala audível, firmeza, olhar para a sala e seriedade profissional.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold mb-1">7. Qual ação do .trim() e por que usar?</label>
+          <div class="grid-caixas">
+            <input type="radio" class="btn-check" name="est${num}_p7" id="est${num}_p7_2" value="2" required>
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p7_2">Ruim<br><small>2 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p7" id="est${num}_p7_4" value="4">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p7_4">Reg.<br><small>4 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p7" id="est${num}_p7_7" value="7">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p7_7">Bom<br><small>7 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p7" id="est${num}_p7_10" value="10">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p7_10">Ótimo<br><small>10 Pts</small></label>
+          </div>
+          <div class="gabarito-dica"><strong>Gabarito p/ Ótimo:</strong> Remove espaços das pontas e impede salvar nomes com apenas espaços em branco.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold mb-1">8. O que é Guard Clause & return?</label>
+          <div class="grid-caixas">
+            <input type="radio" class="btn-check" name="est${num}_p8" id="est${num}_p8_2" value="2" required>
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p8_2">Ruim<br><small>2 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p8" id="est${num}_p8_4" value="4">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p8_4">Reg.<br><small>4 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p8" id="est${num}_p8_7" value="7">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p8_7">Bom<br><small>7 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p8" id="est${num}_p8_10" value="10">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p8_10">Ótimo<br><small>10 Pts</small></label>
+          </div>
+          <div class="gabarito-dica"><strong>Gabarito p/ Ótimo:</strong> Trava de validação que interrompe o código antecipadamente (return) evitando ifs aninhados.</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small fw-bold mb-1">9. Como funciona isNaN() e > 0?</label>
+          <div class="grid-caixas">
+            <input type="radio" class="btn-check" name="est${num}_p9" id="est${num}_p9_2" value="2" required>
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p9_2">Ruim<br><small>2 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p9" id="est${num}_p9_4" value="4">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p9_4">Reg.<br><small>4 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p9" id="est${num}_p9_7" value="7">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p9_7">Bom<br><small>7 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p9" id="est${num}_p9_10" value="10">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p9_10">Ótimo<br><small>10 Pts</small></label>
+          </div>
+          <div class="gabarito-dica"><strong>Gabarito p/ Ótimo:</strong> isNaN testa se não é número e > 0 garante que preço e quantidade sejam estritamente positivos.</div>
+        </div>
+
+        <div class="mb-0">
+          <label class="form-label small fw-bold mb-1">10. Como funciona indiceEdicao no CRUD?</label>
+          <div class="grid-caixas">
+            <input type="radio" class="btn-check" name="est${num}_p10" id="est${num}_p10_2" value="2" required>
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p10_2">Ruim<br><small>2 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p10" id="est${num}_p10_4" value="4">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p10_4">Reg.<br><small>4 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p10" id="est${num}_p10_7" value="7">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p10_7">Bom<br><small>7 Pts</small></label>
+            <input type="radio" class="btn-check" name="est${num}_p10" id="est${num}_p10_10" value="10">
+            <label class="btn btn-outline-success btn-sm" for="est${num}_p10_10">Ótimo<br><small>10 Pts</small></label>
+          </div>
+          <div class="gabarito-dica"><strong>Gabarito p/ Ótimo:</strong> null indica Inclusão (push) e número indica Edição (substitui no índice e reseta botão).</div>
+        </div>
+      `;
+    }
+
+    preTipo.addEventListener("change", () => {
+      document.getElementById("divPreEstudante2").classList.toggle("d-none", preTipo.value === "solo");
+    });
+
+    document.getElementById("formPreCadastro").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const tipo = preTipo.value;
+      const e1 = document.getElementById("preEstudante1").value;
+      const e2 = document.getElementById("preEstudante2").value;
+
+      if (!e1 || (tipo === "dupla" && !e2)) { alert("Selecione os estudantes."); return; }
+      if (tipo === "dupla" && e1 === e2) { alert("Os alunos da dupla precisam ser diferentes."); return; }
+
+      const payload = {
+        tipo,
+        estudante1Key: e1,
+        estudante1Nome: listaEstudantes[e1].nome,
+        estudante2Key: tipo === "dupla" ? e2 : "",
+        estudante2Nome: tipo === "dupla" ? listaEstudantes[e2].nome : ""
+      };
+
+      push(ref(db, "grupos"), payload).then(() => {
+        document.getElementById("formPreCadastro").reset();
+        preTipo.dispatchEvent(new Event("change"));
+      });
+    });
+
+    onValue(ref(db, "grupos"), (snapshot) => {
+      listaGrupos = snapshot.val() || {};
+      renderizarGrupos();
+    });
+
+    function renderizarGrupos() {
+      const opts = ['<option value="">Selecione quem vai apresentar...</option>'];
+      const listEl = document.getElementById("listaGruposAgendados");
+      listEl.innerHTML = "";
+      const keys = Object.keys(listaGrupos);
+
+      if (keys.length === 0) {
+        listEl.innerHTML = '<li class="list-group-item text-muted text-center py-3">Nenhum agendamento cadastrado.</li>';
+        selectApresentacao.innerHTML = opts.join("");
+        return;
+      }
+
+      keys.forEach(id => {
+        const g = listaGrupos[id];
+        const nomeStr = g.tipo === "dupla" ? `${g.estudante1Nome} e ${g.estudante2Nome}` : g.estudante1Nome;
+        opts.push(`<option value="${id}">${nomeStr} (${g.tipo.toUpperCase()})</option>`);
+        listEl.innerHTML += `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div><strong>${nomeStr}</strong> <span class="badge bg-secondary ms-1">${g.tipo.toUpperCase()}</span></div>
+            <button class="btn btn-sm btn-outline-danger" onclick="excluirGrupo('${id}')">Excluir</button>
+          </li>
+        `;
+      });
+
+      selectApresentacao.innerHTML = opts.join("");
+    }
+
+    window.excluirGrupo = function(id) {
+      if (confirm("Remover esta apresentação agendada?")) remove(ref(db, `grupos/${id}`));
+    };
+
+    document.getElementById("btnResetarGrupos").addEventListener("click", () => {
+      if (confirm("Apagar TODOS os agendamentos?")) set(ref(db, "grupos"), null);
+    });
+
+    function getRadioVal(name) {
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? parseInt(el.value, 10) : 0;
+    }
+
+    document.getElementById("formAvaliacao").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const grupoKey = selectApresentacao.value;
+      const g = listaGrupos[grupoKey];
+      if (!g) return;
+
+      const p1 = getRadioVal("canva_p1");
+      const p2 = getRadioVal("canva_p2");
+      const p3 = getRadioVal("canva_p3");
+      const p4 = getRadioVal("canva_p4");
+      const p5 = getRadioVal("canva_p5");
+      const notaCanva = p1 + p2 + p3 + p4 + p5;
+
+      const est1_p6 = getRadioVal("est1_p6");
+      const est1_p7 = getRadioVal("est1_p7");
+      const est1_p8 = getRadioVal("est1_p8");
+      const est1_p9 = getRadioVal("est1_p9");
+      const est1_p10 = getRadioVal("est1_p10");
+      const est1_oral = est1_p6 + est1_p7 + est1_p8 + est1_p9 + est1_p10;
+      const est1_total = Math.round(notaCanva + est1_oral);
+
+      let est2_total = 0, est2_oral = 0, est2_p6 = 0, est2_p7 = 0, est2_p8 = 0, est2_p9 = 0, est2_p10 = 0;
+
+      if (g.tipo === "dupla") {
+        est2_p6 = getRadioVal("est2_p6");
+        est2_p7 = getRadioVal("est2_p7");
+        est2_p8 = getRadioVal("est2_p8");
+        est2_p9 = getRadioVal("est2_p9");
+        est2_p10 = getRadioVal("est2_p10");
+        est2_oral = est2_p6 + est2_p7 + est2_p8 + est2_p9 + est2_p10;
+        est2_total = Math.round(notaCanva + est2_oral);
+      }
+
+      const payload = {
+        grupoKey,
+        tipo: g.tipo,
+        estudante1Nome: g.estudante1Nome,
+        estudante2Nome: g.estudante2Nome || "",
+        notaCanva, p1, p2, p3, p4, p5,
+        est1: { p6: est1_p6, p7: est1_p7, p8: est1_p8, p9: est1_p9, p10: est1_p10, oral: est1_oral, total: est1_total },
+        est2: g.tipo === "dupla" ? { p6: est2_p6, p7: est2_p7, p8: est2_p8, p9: est2_p9, p10: est2_p10, oral: est2_oral, total: est2_total } : null,
+        observacoes: document.getElementById("observacoes").value.trim(),
+        data: new Date().toISOString()
+      };
+
+      if (idEdicao === null) {
+        push(ref(db, "avaliacoes"), payload).then(() => resetForm());
+      } else {
+        update(ref(db, `avaliacoes/${idEdicao}`), payload).then(() => resetForm());
+      }
+    });
+
+    onValue(ref(db, "avaliacoes"), (snapshot) => {
+      listaAvaliacoes = snapshot.val() || {};
+      const tabela = document.getElementById("tabelaAvaliacoes");
+      const keys = Object.keys(listaAvaliacoes);
+
+      if (keys.length === 0) {
+        tabela.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-muted">Nenhuma avaliação cadastrada.</td></tr>';
+        return;
+      }
+
+      tabela.innerHTML = keys.map(id => {
+        const item = listaAvaliacoes[id];
+        const notaStr = item.tipo === "dupla"
+          ? `<small>${item.estudante1Nome.split(' ')[0]}: <strong>${Math.round(item.est1.total)} Pts</strong><br>${item.estudante2Nome.split(' ')[0]}: <strong>${Math.round(item.est2.total)} Pts</strong></small>`
+          : `<strong>${Math.round(item.est1.total)} Pts</strong>`;
+
+        const nomeApresentacao = item.tipo === "dupla" ? `${item.estudante1Nome} & ${item.estudante2Nome}` : item.estudante1Nome;
+
+        return `
+          <tr>
+            <td><small><strong>${nomeApresentacao}</strong></small></td>
+            <td>${notaStr}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary" onclick="prepararEdicao('${id}')">Editar</button>
+              <button class="btn btn-sm btn-outline-dark" onclick="gerarPDF('${id}')">PDF</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    });
+
+    document.getElementById("btnResetarAvaliacoes").addEventListener("click", () => {
+      if (confirm("Apagar TODAS as avaliações do banco de dados?")) set(ref(db, "avaliacoes"), null);
+    });
+
+    function setRadioVal(name, val) {
+      const el = document.querySelector(`input[name="${name}"][value="${val}"]`);
+      if (el) el.checked = true;
+    }
+
+    window.prepararEdicao = function(id) {
+      const item = listaAvaliacoes[id];
+      if (!item) return;
+
+      idEdicao = id;
+      selectApresentacao.value = item.grupoKey;
+      selectApresentacao.dispatchEvent(new Event("change"));
+
+      setRadioVal("canva_p1", item.p1);
+      setRadioVal("canva_p2", item.p2);
+      setRadioVal("canva_p3", item.p3);
+      setRadioVal("canva_p4", item.p4);
+      setRadioVal("canva_p5", item.p5);
+
+      setRadioVal("est1_p6", item.est1.p6);
+      setRadioVal("est1_p7", item.est1.p7);
+      setRadioVal("est1_p8", item.est1.p8);
+      setRadioVal("est1_p9", item.est1.p9);
+      setRadioVal("est1_p10", item.est1.p10);
+
+      if (item.tipo === "dupla" && item.est2) {
+        setRadioVal("est2_p6", item.est2.p6);
+        setRadioVal("est2_p7", item.est2.p7);
+        setRadioVal("est2_p8", item.est2.p8);
+        setRadioVal("est2_p9", item.est2.p9);
+        setRadioVal("est2_p10", item.est2.p10);
+      }
+
+      document.getElementById("observacoes").value = item.observacoes;
+      document.getElementById("formTitulo").textContent = "Editar Avaliação";
+      document.getElementById("btnSalvar").textContent = "Salvar Alterações";
+      document.getElementById("btnCancelar").classList.remove("d-none");
+    };
+
+    function resetForm() {
+      idEdicao = null;
+      document.getElementById("formAvaliacao").reset();
+      containerOralidade.innerHTML = '<div class="col-12 text-muted">Selecione uma apresentação acima.</div>';
+      document.getElementById("formTitulo").textContent = "Ficha de Avaliação";
+      document.getElementById("btnSalvar").textContent = "Salvar Avaliação";
+      document.getElementById("btnCancelar").classList.add("d-none");
+    }
+
+    document.getElementById("btnCancelar").addEventListener("click", resetForm);
+
+    // RELATÓRIO INDIVIDUAL EM PDF
+    window.gerarPDF = function(id) {
+      const item = listaAvaliacoes[id];
+      if (!item) return;
+
+      let est2HTML = "";
+      if (item.tipo === "dupla") {
+        est2HTML = `
+          <h4 style="color: #ffc107; margin-top: 20px; border-bottom: 2px solid #ffc107;">Oralidade: ${item.estudante2Nome}</h4>
+          <ul>
+            <li>P6. Postura e Tom de Voz: <strong>${Math.round(item.est2.p6)} / 10 Pts</strong></li>
+            <li>P7. Ação do .trim(): <strong>${Math.round(item.est2.p7)} / 10 Pts</strong></li>
+            <li>P8. Guard Clause e return: <strong>${Math.round(item.est2.p8)} / 10 Pts</strong></li>
+            <li>P9. Validação isNaN() e > 0: <strong>${Math.round(item.est2.p9)} / 10 Pts</strong></li>
+            <li>P10. Estado indiceEdicao e CRUD: <strong>${Math.round(item.est2.p10)} / 10 Pts</strong></li>
+          </ul>
+          <p style="font-size: 1.1em;"><strong>Nota Final ${item.estudante2Nome}: ${Math.round(item.est2.total)} / 100</strong></p>
+        `;
+      }
+
+      const html = `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="text-align: center; color: #0d6efd;">Relatório de Avaliação - Turma 2B</h2>
+          <hr>
+          <p><strong>Apresentação:</strong> ${item.tipo === "dupla" ? `${item.estudante1Nome} e${item.estudante2Nome}` : item.estudante1Nome}</p>
+          <p><strong>Data:</strong> ${new Date(item.data).toLocaleString('pt-BR')}</p>
+
+          <h4 style="color: #0dcaf0; margin-top: 20px; border-bottom: 2px solid #0dcaf0;">Canva / Material Visual (Compartilhado): ${Math.round(item.notaCanva)} Pts</h4>
+          <ul>
+            <li>P1. Legibilidade e Contraste: <strong>${Math.round(item.p1)} / 10 Pts</strong></li>
+            <li>P2. Hierarquia das Fontes: <strong>${Math.round(item.p2)} / 10 Pts</strong></li>
+            <li>P3. Prints do Código: <strong>${Math.round(item.p3)} / 10 Pts</strong></li>
+            <li>P4. Layout e Estética: <strong>${Math.round(item.p4)} / 10 Pts</strong></li>
+            <li>P5. Cobertura Técnica no Canva: <strong>${Math.round(item.p5)} / 10 Pts</strong></li>
+          </ul>
+
+          <h4 style="color: #ffc107; margin-top: 20px; border-bottom: 2px solid #ffc107;">Oralidade: ${item.estudante1Nome}</h4>
+          <ul>
+            <li>P6. Postura e Tom de Voz: <strong>${Math.round(item.est1.p6)} / 10 Pts</strong></li>
+            <li>P7. Ação do .trim(): <strong>${Math.round(item.est1.p7)} / 10 Pts</strong></li>
+            <li>P8. Guard Clause e return: <strong>${Math.round(item.est1.p8)} / 10 Pts</strong></li>
+            <li>P9. Validação isNaN() e > 0: <strong>${Math.round(item.est1.p9)} / 10 Pts</strong></li>
+            <li>P10. Estado indiceEdicao e CRUD: <strong>${Math.round(item.est1.p10)} / 10 Pts</strong></li>
+          </ul>
+          <p style="font-size: 1.1em;"><strong>Nota Final ${item.estudante1Nome}: ${Math.round(item.est1.total)} / 100</strong></p>
+
+          ${est2HTML}
+
+          <div style="margin-top: 20px; background-color: #f8f9fa; padding: 12px; border-left: 4px solid #0d6efd;">
+            <strong>Feedback Geral:</strong>
+            <p style="margin-top: 5px;">${item.observacoes || "Sem observações adicionais."}</p>
+          </div>
+        </div>
+      `;
+
+      html2pdf().set({ margin: 10, filename: `Avaliacao_${item.estudante1Nome.replace(/\s+/g, '_')}.pdf` }).from(html).save();
+    };
+
+    // RELATÓRIO CONSOLIDADO COM CABEÇALHO UNIFICADO NA MESMA PÁGINA
+    document.getElementById("btnRelatorioGeral").addEventListener("click", () => {
+      const mapaNotas = {};
+
+      Object.values(listaAvaliacoes).forEach(av => {
+        if (av.estudante1Nome) {
+          mapaNotas[av.estudante1Nome] = {
+            nota: Math.round(av.est1.total),
+            canva: Math.round(av.notaCanva),
+            oral: Math.round(av.est1.oral)
+          };
+        }
+        if (av.tipo === "dupla" && av.estudante2Nome && av.est2) {
+          mapaNotas[av.estudante2Nome] = {
+            nota: Math.round(av.est2.total),
+            canva: Math.round(av.notaCanva),
+            oral: Math.round(av.est2.oral)
+          };
+        }
+      });
+
+      const alunosOrdenados = Object.values(listaEstudantes)
+        .map(a => a.nome)
+        .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+      let linhasHTML = "";
+      alunosOrdenados.forEach((nome, idx) => {
+        const dados = mapaNotas[nome];
+        const statusStr = dados ? `<strong style="color: #198754;">${dados.nota} Pts</strong>` : `<span style="color: #dc3545;">Pendente</span>`;
+        const canvaStr = dados ? `${dados.canva} Pts` : "-";
+        const oralStr = dados ? `${dados.oral} Pts` : "-";
+
+        linhasHTML += `
+          <tr style="border-bottom: 1px solid #e0e0e0; ${idx % 2 === 0 ? 'background-color: #fcfcfc;' : ''}">
+            <td style="padding: 3px 6px; text-align: center; width: 30px;">${(idx + 1).toString().padStart(2, '0')}</td>
+            <td style="padding: 3px 6px;"><strong>${nome}</strong></td>
+            <td style="padding: 3px 6px; text-align: center; width: 80px;">${canvaStr}</td>
+            <td style="padding: 3px 6px; text-align: center; width: 80px;">${oralStr}</td>
+            <td style="padding: 3px 6px; text-align: center; width: 90px;">${statusStr}</td>
+          </tr>
+        `;
+      });
+
+      const htmlConsolidado = `
+        <div style="font-family: Arial, sans-serif; padding: 0; color: #333; font-size: 0.78em;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead style="display: table-header-group;">
+              <tr>
+                <td colspan="5" style="border: none; padding-bottom: 6px;">
+                  <div style="text-align: center; border-bottom: 2px solid #0d6efd; padding-bottom: 6px;">
+                    <h2 style="color: #0d6efd; margin: 0 0 2px 0; font-size: 1.4em;">Relatório Consolidado de Notas - Turma 2B</h2>
+                    <div style="color: #555; font-size: 0.88em;">Programação de Aplicativos — Guia Avançado CRUD</div>
+                    <div style="font-size: 0.78em; color: #777; margin-top: 2px;">Emitido em: ${new Date().toLocaleString('pt-BR')}</div>
+                  </div>
+                </td>
+              </tr>
+              <tr style="background-color: #0d6efd; color: white; font-weight: bold;">
+                <th style="padding: 5px 6px; text-align: center;">#</th>
+                <th style="padding: 5px 6px; text-align: left;">Nome do Estudante</th>
+                <th style="padding: 5px 6px; text-align: center;">Canva (50)</th>
+                <th style="padding: 5px 6px; text-align: center;">Oralidade (50)</th>
+                <th style="padding: 5px 6px; text-align: center;">Nota Final</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${linhasHTML}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      // MARGENS E QUEBRAS REGULADAS PARA MANTER O CABEÇALHO NA MESMA PÁGINA
+      const opt = {
+        margin: [6, 8, 6, 8],
+        filename: `Relatorio_Geral_Turma_2B.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all'] }
+      };
+
+      html2pdf().set(opt).from(htmlConsolidado).save();
+    });
+
+    document.getElementById("btnResetarAlunos").addEventListener("click", () => {
+      if (confirm("Resetar alunos para o padrão?")) set(ref(db, "estudantes"), turma2BPadrao);
+    });
+  </script>
+</body>
+</html>
